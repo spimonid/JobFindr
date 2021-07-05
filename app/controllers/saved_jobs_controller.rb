@@ -1,15 +1,20 @@
 class SavedJobsController < ApplicationController
   def index
-    render json: SavedJob.all.as_json
+    saved_jobs = SavedJob.where(user_id: current_user.id, status: "saved")
+    render json: saved_jobs
   end
 
   def create
+    p current_user.id, current_user.email
     saved_job = SavedJob.new(
       user_id: current_user.id,
-      role: params['role'],
-      remote: true
-      technologies: params["technologies"],
+      job_id: params["job_id"],
+      status: "saved",
     )
-    saved_job.save
+    if saved_job.save
+      render json: saved_job.as_json
+    else
+      render json: { errors: saved_job.errors.full_messages }, status: 422
+    end
   end
 end
