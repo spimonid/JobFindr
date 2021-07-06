@@ -10,5 +10,8 @@ Rails.application.routes.draw do
 
   post "/saved_jobs" => "saved_jobs#create"
   get "/saved_jobs" => "saved_jobs#index"
+
+  get "/companies" => "companies#index"
+  post "/companies" => "companies#create"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
