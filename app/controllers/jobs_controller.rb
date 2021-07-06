@@ -11,11 +11,20 @@ class JobsController < ApplicationController
     URI.open(url) do |rss|
       feed = RSS::Parser.parse(rss)
       feed.items.each do |item|
-        dict = {}
-        dict["Item"] = item.title
-        dict["Desc"] = item.description
-        dict["Published"] = item.pubDate
-        arr << dict
+        new_company = Company.create(
+          name: item.title.split(":")[0],
+        )
+        Job.create(
+          company_id: new_company.id,
+          role: item.title.split(":")[1],
+          remote: true,
+          technologies: item.description,
+        )
+        # dict = {}
+        # dict["Item"] = item.title
+        # dict["Desc"] = item.description
+        # dict["Published"] = item.pubDate
+        # arr << dict
         # dictitem.title.split(":")[0]
       end
     end
