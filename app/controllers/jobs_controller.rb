@@ -1,21 +1,25 @@
 class JobsController < ApplicationController
   def index
-    render json: Job.all.as_json
+    render json: Job.all
   end
 
   def wwr
     require "rss"
     require "open-uri"
     arr = []
-    url = "https://weworkremotely.com/remote-jobs.rss"
+    url = "https://weworkremotely.com/categories/remote-back-end-programming-jobs.rss"
     URI.open(url) do |rss|
       feed = RSS::Parser.parse(rss)
-      puts "Title: #{feed.channel.title}"
       feed.items.each do |item|
-        puts "Item: #{item.title}"
-        puts "Descrip: #{item.about}"
+        dict = {}
+        dict["Item"] = item.title
+        dict["Desc"] = item.description
+        dict["Published"] = item.pubDate
+        arr << dict
+        # dictitem.title.split(":")[0]
       end
     end
+    render json: arr
   end
 
   # def create

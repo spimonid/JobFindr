@@ -5,7 +5,6 @@ class SavedJobsController < ApplicationController
   end
 
   def create
-    p current_user.id, current_user.email
     saved_job = SavedJob.new(
       user_id: current_user.id,
       job_id: params["job_id"],

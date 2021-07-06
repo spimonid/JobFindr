@@ -1,5 +1,4 @@
 class JobSerializer < ActiveModel::Serializer
-  attributes :id, :company, :role
+  attributes :id, :company, :role, :remote, :technologies
   belongs_to :company
-  has_many :saved_jobs
 end
