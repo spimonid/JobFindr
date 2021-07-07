@@ -8,7 +8,6 @@ class JobsController < ApplicationController
     soft_skills = ["empathy", "empathetic", "collaborative", "collaboration"]
     require "rss"
     require "open-uri"
-    arr = []
     url = "https://weworkremotely.com/categories/remote-back-end-programming-jobs.rss"
     URI.open(url) do |rss|
       feed = RSS::Parser.parse(rss)
@@ -16,7 +15,6 @@ class JobsController < ApplicationController
         new_company = Company.create(
           name: item.title.split(":")[0],
         )
-
         Job.create(
           company_id: new_company.id,
           role: item.title.split(":")[1],
@@ -26,8 +24,8 @@ class JobsController < ApplicationController
           link: item.link,
           guid: item.guid.to_s[6..-8],
         )
+        puts item.description.to_s.split("<")
       end
     end
-    render json: arr
   end
 end
