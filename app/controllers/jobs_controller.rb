@@ -32,6 +32,7 @@ class JobsController < ApplicationController
           published_date: item.pubDate,
           link: item.link,
           guid: item.guid.to_s[6..-8],
+          full_description: item.description,
         )
       end
     end
