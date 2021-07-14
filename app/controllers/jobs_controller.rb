@@ -33,6 +33,7 @@ class JobsController < ApplicationController
           link: item.link,
           guid: item.guid.to_s[6..-8],
           full_description: item.description,
+          logo: item.description.split(">")[0][10..-4],
         )
       end
     end
